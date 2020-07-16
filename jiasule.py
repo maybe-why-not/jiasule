@@ -1,9 +1,7 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-import os, json, base64, sqlite3, subprocess, win32api, win32gui
-from pymouse import PyMouse
-from pykeyboard import PyKeyboard
+import os, json, base64, sqlite3, time
 from win32crypt import CryptUnprotectData
 from cryptography.hazmat.primitives.ciphers.aead import AESGCM
 
@@ -46,22 +44,4 @@ def get_cookie_from_chrome(host='zoomeye.org'):
         # print(cookies)
         return cookies
 
-#打开新窗口
-subprocess.Popen('chrome', stdout=subprocess.PIPE, stderr=subprocess.PIPE, creationflags=0x08000000)
-handle = win32gui.FindWindow(None, '新标签页 - Google Chrome')
-#先获取句柄方便后续操作
-#打开浏览器登录好账号
-while(1):
-    name = input("Are you really?[Y|N]")
-    if (name == 'Y') or (name == 'y'):
-        break
-
-m = PyMouse()
-k = PyKeyboard()
-#这是一个单击屏幕中心并按f5的示例：
-x_dim, y_dim = m.screen_size()
-m.click(int(x_dim/2), int(y_dim/2), 1)
-k.tap_key(k.function_keys[5])
-time.sleep(1)
-cookies = get_cookie_from_chrome()
-print(cookies)
+print(get_cookie_from_chrome())
